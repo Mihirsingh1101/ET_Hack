@@ -1,0 +1,19 @@
+{
+    "profile": "aggressive",
+    "scores": {
+        "capacity": 73.33,
+        "tolerance": 27.08,
+        "behavior": 66.67,
+        "literacy": 20.0,
+        "composite": 57.46
+    },
+    "derived": {
+        "savings_rate": 0.5,
+        "debt_ratio": 0.0
+    },
+    "meta": {
+        "goal": "income",
+        "horizon": "medium"
+    },
+    "flags": []
+}

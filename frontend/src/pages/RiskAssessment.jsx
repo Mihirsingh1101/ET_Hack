@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function RiskAssessment() {
-  const [selectedRisk, setSelectedRisk] = useState(null);
+  const [selectedRisk, setSelectedRisk] = useState(localStorage.getItem('user_risk') || null);
+  const [panicHistory, setPanicHistory] = useState(parseInt(localStorage.getItem('user_panic')) || 1);
+  const [drawdownReaction, setDrawdownReaction] = useState(parseInt(localStorage.getItem('user_drawdown')) || 1);
+
+  const handleContinue = () => {
+    localStorage.setItem('user_risk', selectedRisk);
+    localStorage.setItem('user_panic', panicHistory);
+    localStorage.setItem('user_drawdown', drawdownReaction);
+  };
 
   const riskOptions = [
     {
@@ -86,11 +94,65 @@ export default function RiskAssessment() {
         </section>
 
         {selectedRisk && (
-           <section className="mt-16 w-full flex justify-center">
-            <Link to="/capital" className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+           <section className="mt-16 w-full flex flex-col items-center gap-12 pb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
+              {/* Panic History */}
+              <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-800 mb-6">Have you sold investments during a market crash?</h3>
+                <div className="flex bg-white p-1.5 rounded-2xl gap-2 shadow-inner">
+                  {[
+                    { id: 0, label: 'Never' },
+                    { id: 1, label: 'Rarely' },
+                    { id: 3, label: 'Often' }
+                  ].map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => setPanicHistory(p.id)}
+                      className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
+                        panicHistory === p.id 
+                          ? 'bg-blue-600 shadow-lg text-white' 
+                          : 'text-slate-400 hover:text-slate-600'
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Drawdown Reaction */}
+              <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-800 mb-6">Reaction to a 20% portfolio drop?</h3>
+                <div className="flex bg-white p-1.5 rounded-2xl gap-2 shadow-inner">
+                  {[
+                    { id: 0, label: 'Panic' },
+                    { id: 2, label: 'Wait' },
+                    { id: 4, label: 'Buy More' }
+                  ].map((d) => (
+                    <button
+                      key={d.id}
+                      onClick={() => setDrawdownReaction(d.id)}
+                      className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
+                        drawdownReaction === d.id 
+                          ? 'bg-blue-600 shadow-lg text-white' 
+                          : 'text-slate-400 hover:text-slate-600'
+                      }`}
+                    >
+                      {d.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Link 
+              to="/capital" 
+              onClick={handleContinue}
+              className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-12 rounded-2xl shadow-xl transition-all duration-200 transform hover:scale-105 active:scale-95"
+            >
               <span className="text-lg">Continue</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
             </Link>
           </section>

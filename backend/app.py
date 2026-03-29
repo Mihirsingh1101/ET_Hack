@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List
 
 from chart_intelligence.data_fetcher import fetch_ohlcv, fetch_historical_5y, get_stock_info
 from chart_intelligence.pattern_detector import detect_all_patterns
@@ -7,7 +8,30 @@ from chart_intelligence.backtester import run_backtest
 from chart_intelligence.ai_explainer import generate_explanation
 
 import asyncio
+import os
+import sys
+import json
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
+
+# Add parent directory to sys.path to allow importing from 'et times'
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ROOT_DIR)
+sys.path.append(os.path.join(ROOT_DIR, "et_times"))
+
+# Import 'et_times' modules
+try:
+    from et_times.profiling.profile import compute_profile
+    from et_times.signals.pipeline import personalize_signals
+except ImportError:
+    # Handle if ROOT_DIR was not on path
+    sys.path.append(ROOT_DIR)
+    from et_times.profiling.profile import compute_profile
+    from et_times.signals.pipeline import personalize_signals
+from portfolio_optimizer import run_portfolio_optimization
+
+PROFILE_FILE = Path(__file__).parent.absolute() / "profile.json"
+PORTFOLIO_FILE = Path(__file__).parent.absolute() / "portfolio.json"
 
 app = FastAPI()
 
@@ -137,6 +161,73 @@ class PortfolioItem(BaseModel):
     symbol: str
     amount: float = 0.0
 
+class ProfileData(BaseModel):
+    # Required for et times/profiling.py/profile.py
+    income: float
+    expenses: float
+    emi: float = 0
+    liquidity_buffer: float = 0
+    job_type: str = "salaried"
+    drawdown_reaction: int = 2
+    panic_history: int = 1
+    max_loss_pct: int = 15
+    check_frequency: int = 1
+    holding_period: int = 2
+    idea_source: int = 2
+    experience_years: int = 1
+    literacy_tools: List[str] = []
+    horizon: str = "medium"
+    goal: str = "wealth"
+
+@app.post("/api/profile")
+async def save_profile(data: ProfileData):
+    """Computes and saves the user profile using the et times engine."""
+    try:
+        profile_results = compute_profile(data.dict())
+        with open(PROFILE_FILE, "w") as f:
+            json.dump(profile_results, f, indent=4)
+        return {"message": "Profile updated", "profile": profile_results}
+    except Exception as e:
+        print(f"Profiling error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/profile")
+async def get_profile():
+    if not PROFILE_FILE.exists():
+        return {"profile": None}
+    with open(PROFILE_FILE, "r") as f:
+        return {"profile": json.load(f)}
+
+@app.get("/api/personalized-matches")
+async def get_personalized_matches():
+    """Generates personalized matches using the et times personalization engine."""
+    if not PROFILE_FILE.exists():
+        return {"matches": []}
+    
+    with open(PROFILE_FILE, "r") as f:
+        profile_data = json.load(f)
+    
+    # Mock some NIFTY50 signals for the engine to score
+    # In a real app, these would come from the live pattern detector
+    mock_signals = [
+        {"stock": "RELIANCE", "type": "MACD Crossover", "confidence": 0.85, "risk_level": "medium", "expected_return": 12, "explanation_raw": "Price crossed above the 50-day SMA with strong volume support"},
+        {"stock": "TCS", "type": "RSI Oversold", "confidence": 0.72, "risk_level": "low", "expected_return": 8, "explanation_raw": "RSI dipped below 30, suggesting a tactical bounce is likely"},
+        {"stock": "ZOMATO", "type": "Breakout", "confidence": 0.65, "risk_level": "high", "expected_return": 25, "explanation_raw": "Consolidation phase ending with high volatility and momentum"},
+        {"stock": "HDFCBANK", "type": "Double Bottom", "confidence": 0.78, "risk_level": "low", "expected_return": 10, "explanation_raw": "Confirmed bullish reversal pattern near historical support zone"},
+        {"stock": "INFY", "type": "Moving Average Cross", "confidence": 0.68, "risk_level": "medium", "expected_return": 15, "explanation_raw": "Golden Cross confirmed on the daily chart interval"},
+        {"stock": "ITC", "type": "Dividend Play", "confidence": 0.90, "risk_level": "low", "expected_return": 5, "explanation_raw": "Strong cash flow positioning with sustainable yield support"},
+        {"stock": "ADANIENT", "type": "Momentum", "confidence": 0.60, "risk_level": "high", "expected_return": 40, "explanation_raw": "Aggressive trend detected in short-term options flow"},
+        {"stock": "BHARTIARTL", "type": "Bullish Flag", "confidence": 0.75, "risk_level": "medium", "expected_return": 18, "explanation_raw": "Tight consolidation within an uptrend indicates further breakout potential"},
+    ]
+
+    try:
+        # Use personalization engine from et times
+        matches = personalize_signals(profile_data["profile"], mock_signals)
+        return {"matches": matches, "strategy": profile_data["profile"]}
+    except Exception as e:
+        print(f"Personalization error: {str(e)}")
+        return {"matches": [], "error": str(e)}
+
 PORTFOLIO_FILE = Path(__file__).parent.absolute() / "portfolio.json"
 
 @app.post("/api/portfolio")
@@ -207,6 +298,36 @@ async def delete_from_portfolio(symbol: str):
     except Exception as e:
         print(f"DELETE error: {str(e)}")
         return {"message": f"Error: {str(e)}", "portfolio": []}
+
+class OptimizationInput(BaseModel):
+    symbol: str
+    max_investment: float
+
+@app.post("/api/optimize-addition")
+async def optimize_addition(data: OptimizationInput):
+    """Calculates the optimal investment amount for a new asset to minimize portfolio risk."""
+    portfolio = {}
+    if PORTFOLIO_FILE.exists():
+        try:
+            with open(PORTFOLIO_FILE, "r") as f:
+                raw_portfolio = json.load(f)
+                # Map [{symbol, amount}] to {symbol: total_amount}
+                for item in raw_portfolio:
+                    s = item["symbol"].strip().upper()
+                    a = float(item["amount"])
+                    portfolio[s] = portfolio.get(s, 0) + a
+        except Exception as e:
+            print(f"Error loading portfolio for optimization: {e}")
+    
+    # Run optimizer logic from portfolio_optimizer.py
+    try:
+        result = run_portfolio_optimization(portfolio, data.symbol.strip().upper(), data.max_investment)
+        if "error" in result:
+             raise HTTPException(status_code=400, detail=result["error"])
+        return result
+    except Exception as e:
+        print(f"Optimization execution error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/portfolio")
 async def get_portfolio():

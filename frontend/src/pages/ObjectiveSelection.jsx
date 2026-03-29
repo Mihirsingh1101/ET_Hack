@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ObjectiveSelection() {
-  const [selectedObjective, setSelectedObjective] = useState(null);
+  const [selectedObjective, setSelectedObjective] = useState(localStorage.getItem('user_goal') || null);
+  const [selectedHorizon, setSelectedHorizon] = useState(localStorage.getItem('user_horizon') || 'medium');
+
+  const handleContinue = () => {
+    localStorage.setItem('user_goal', selectedObjective);
+    localStorage.setItem('user_horizon', selectedHorizon);
+  };
 
   const objectiveOptions = [
     {
@@ -86,11 +92,38 @@ export default function ObjectiveSelection() {
         </section>
 
         {selectedObjective && (
-           <section className="mt-16 w-full flex justify-center">
-            <Link to="/risk" className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+           <section className="mt-16 w-full flex flex-col items-center gap-8">
+            <div className="w-full max-w-xl">
+              <h2 className="text-xl font-bold text-slate-800 mb-6 text-center">What is your time horizon?</h2>
+              <div className="flex bg-slate-100 p-1.5 rounded-2xl gap-2">
+                {[
+                  { id: 'short', label: 'Short (<1yr)' },
+                  { id: 'medium', label: 'Medium (1-3yrs)' },
+                  { id: 'long', label: 'Long (3yrs+)' }
+                ].map((h) => (
+                  <button
+                    key={h.id}
+                    onClick={() => setSelectedHorizon(h.id)}
+                    className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
+                      selectedHorizon === h.id 
+                        ? 'bg-white shadow-lg text-blue-600' 
+                        : 'text-slate-400 hover:text-slate-600'
+                    }`}
+                  >
+                    {h.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <Link 
+              to="/risk" 
+              onClick={handleContinue}
+              className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-12 rounded-2xl shadow-xl transition-all duration-200 transform hover:scale-105 active:scale-95 mt-4"
+            >
               <span className="text-lg">Continue</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
             </Link>
           </section>

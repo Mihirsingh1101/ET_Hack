@@ -18,92 +18,102 @@ const addToPortfolioApi = async (symbol, amount) => {
 };
 
 const TopProfileMatches = ({ onAdd }) => {
+  const [matches, setMatches] = useState([]);
+  const [strategy, setStrategy] = useState('Loading...');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const res = await fetch('http://localhost:8001/api/personalized-matches');
+        const data = await res.json();
+        if (data.matches) {
+          setMatches(data.matches);
+          setStrategy(data.strategy || 'Standard');
+        }
+      } catch (err) {
+        console.error("Error fetching personalized matches:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMatches();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="animate-pulse">
+        <div className="h-8 w-48 bg-slate-200 rounded mb-4"></div>
+        <div className="flex gap-4 overflow-x-auto pb-4">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="min-w-[280px] h-40 bg-slate-100 rounded-2xl"></div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold text-slate-800">Top Profile Matches</h2>
-        <span className="text-xs font-semibold px-3 py-1 bg-[#e0e7ff] text-[#4338ca] rounded-full">Aggressive Strategy</span>
+        <span className="text-xs font-black px-4 py-1.5 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-200 uppercase tracking-wider">
+          {strategy.replace('_', ' ')}
+        </span>
       </div>
       
       <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
-        {/* Card 1 */}
-        <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm relative overflow-hidden transition-all hover:shadow-md group">
-          <div onClick={() => navigate('/analysis?symbol=RELIANCE')} className="cursor-pointer">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="font-bold text-lg text-slate-800">RELIANCE</h3>
-                <p className="text-gray-500 text-sm">₹2984.50</p>
-              </div>
-              <div className="w-12 h-12 rounded-full border-4 border-[#dcfce7] flex items-center justify-center">
-                <span className="text-[#059669] text-xs font-bold">92%</span>
-              </div>
-            </div>
-            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-              Strong Confluence
-            </div>
+        {matches.length === 0 ? (
+          <div className="w-full py-10 text-center bg-white rounded-2xl border border-dashed border-slate-200">
+            <p className="text-slate-400 font-medium italic">Complete your profile to see personalized matches</p>
           </div>
-          <button 
-            onClick={(e) => { e.stopPropagation(); onAdd("RELIANCE"); }}
-            className="absolute top-2 right-2 p-1.5 bg-slate-100 text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white"
-            title="Add to Portfolio"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          </button>
-        </div>
-        
-        {/* Card 2 */}
-        <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm transition-all hover:shadow-md group relative">
-          <div onClick={() => navigate('/analysis?symbol=TCS')} className="cursor-pointer">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="font-bold text-lg text-slate-800">TCS</h3>
-                <p className="text-gray-500 text-sm">₹4120.15</p>
+        ) : (
+          matches.map((match, idx) => (
+            <div key={idx} className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm relative overflow-hidden transition-all hover:shadow-md group">
+              <div onClick={() => navigate(`/analysis?symbol=${match.stock}`)} className="cursor-pointer">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="font-black text-xl text-slate-900 leading-none mb-1">{match.stock}</h3>
+                    <p className="text-slate-400 text-xs font-bold uppercase tracking-tight">{match.signal_type}</p>
+                  </div>
+                  <div className={`w-12 h-12 rounded-full border-4 flex items-center justify-center ${
+                    match.priority_score > 0.7 ? 'border-emerald-100' : 'border-blue-100'
+                  }`}>
+                    <span className={`text-xs font-black ${
+                      match.priority_score > 0.7 ? 'text-emerald-600' : 'text-blue-600'
+                    }`}>
+                      {Math.round(match.priority_score * 100)}%
+                    </span>
+                  </div>
+                </div>
+                
+                <p className="text-slate-600 text-[11px] leading-relaxed mb-4 line-clamp-2 h-8 font-medium italic">
+                  "{match.explanation}"
+                </p>
+
+                <div className="flex justify-between items-center mt-auto">
+                  <div className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${
+                    match.action === 'BUY' ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-500'
+                  }`}>
+                    {match.action}
+                  </div>
+                  <div className="text-[10px] font-bold text-slate-400">
+                    Pos: <span className="text-slate-900">{Math.round(match.position_size * 100)}%</span>
+                  </div>
+                </div>
               </div>
-              <div className="w-12 h-12 rounded-full border-4 border-[#dcfce7] flex items-center justify-center">
-                <span className="text-[#059669] text-xs font-bold">88%</span>
-              </div>
+              
+              <button 
+                onClick={(e) => { e.stopPropagation(); onAdd(match.stock); }}
+                className="absolute top-3 right-3 p-2 bg-slate-900 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-emerald-500 shadow-xl"
+                title="Add to Portfolio"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5"></path></svg>
+              </button>
             </div>
-            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-              Strong Confluence
-            </div>
-          </div>
-          <button 
-            onClick={(e) => { e.stopPropagation(); onAdd("TCS"); }}
-            className="absolute top-2 right-2 p-1.5 bg-slate-100 text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white"
-            title="Add to Portfolio"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          </button>
-        </div>
-        
-        {/* Card 3 */}
-        <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm transition-all hover:shadow-md group relative">
-          <div onClick={() => navigate('/analysis?symbol=HDFCBANK')} className="cursor-pointer">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="font-bold text-lg text-slate-800">HDFCBANK</h3>
-                <p className="text-gray-500 text-sm">₹1450.00</p>
-              </div>
-              <div className="w-12 h-12 rounded-full border-4 border-gray-100 flex items-center justify-center">
-                <span className="text-gray-400 text-xs font-bold">--</span>
-              </div>
-            </div>
-            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-              Strong Confluence
-            </div>
-          </div>
-          <button 
-            onClick={(e) => { e.stopPropagation(); onAdd("HDFCBANK"); }}
-            className="absolute top-2 right-2 p-1.5 bg-slate-100 text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white"
-            title="Add to Portfolio"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          </button>
-        </div>
+          ))
+        )}
       </div>
     </section>
   );
