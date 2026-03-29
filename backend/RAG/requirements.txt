@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+chromadb
+sentence-transformers
+langchain-text-splitters
+feedparser
+beautifulsoup4
+dotenv
+openai
+python-dotenv

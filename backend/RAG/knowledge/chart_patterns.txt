@@ -1,0 +1,223 @@
+CHART PATTERNS KNOWLEDGE BASE
+================================
+
+This document covers the major chart patterns used in technical analysis of stocks and indices.
+
+---
+
+PATTERN: RESISTANCE BREAKOUT
+Type: Breakout
+Direction: Bullish
+Description:
+A resistance breakout occurs when a stock's price closes decisively above a previously established resistance level — the price ceiling where sellers historically stepped in. This is one of the most powerful signals in technical analysis.
+
+How to identify:
+- Price has tested the same high (resistance) at least twice before.
+- The breakout candle closes above that level, preferably with volume 20%+ above average.
+- Volume confirmation is critical; a breakout on low volume is often a "false breakout."
+
+What it means:
+- The supply zone has been absorbed. Sellers who previously capped the price have been overwhelmed by buyers.
+- Former resistance now becomes new support.
+- The stock may continue upward by roughly the same distance as the base/consolidation pattern (measured move).
+
+Historical significance:
+- Studies show volume-confirmed breakouts have a higher success rate (60–70%+) in trending markets.
+- In Indian equities, breakouts often coincide with earnings surprises, FII inflows, or sector tailwinds.
+
+Key trading levels:
+- Entry: On the breakout candle close or on a pullback to the breakout level.
+- Stop-loss: Below the former resistance (now support).
+- Target: Resistance + height of the base.
+
+---
+
+PATTERN: SUPPORT BOUNCE
+Type: Support/Resistance
+Direction: Bullish
+Description:
+A support bounce occurs when a stock's price falls to a key support level and reverses upward. Support levels are price floors where buyers have historically stepped in.
+
+How to identify:
+- Price approaches or touches a well-established support zone.
+- A reversal candle forms at or near the support (hammer, bullish engulfing, doji).
+- Ideally accompanied by declining sell-side volume and rising buy-side volume.
+
+What it means:
+- Buyers are defending a critical price level; demand exceeds supply at this zone.
+- Risk/reward is favourable — stop-loss is tight (just below support), while target is the prior high.
+
+Key trading levels:
+- Entry: On the reversal candle confirmation.
+- Stop-loss: A daily close below support.
+- Target: Previous swing high or next resistance zone.
+
+---
+
+PATTERN: DOUBLE TOP
+Type: Reversal
+Direction: Bearish
+Description:
+The double top is a bearish reversal pattern formed after an uptrend. It consists of two peaks at approximately the same price level, separated by a trough (the neckline).
+
+How to identify:
+- Two highs formed within 3% of each other.
+- A trough (neckline) between the two peaks.
+- Price breaks below the neckline to confirm the pattern.
+- Volume is typically lower on the second peak, signalling weakening momentum.
+
+What it means:
+- The stock has twice failed to break above a price ceiling — buyers are exhausted.
+- The breakdown below the neckline signals a shift from uptrend to downtrend.
+- Measured move target: Neckline − (Peak − Neckline).
+
+Key trading levels:
+- Entry: On close below the neckline.
+- Stop-loss: Above the second peak.
+- Target: Neckline minus the height of the pattern.
+
+Common mistakes:
+- Entering before the neckline breaks (anticipated pattern, not confirmed).
+- Ignoring volume; a neckline break on low volume is suspicious.
+
+---
+
+PATTERN: DOUBLE BOTTOM
+Type: Reversal
+Direction: Bullish
+Description:
+The double bottom is the bullish mirror of the double top. It forms after a downtrend and signals a potential reversal to the upside.
+
+How to identify:
+- Two troughs at approximately the same price level (within 3%).
+- A peak (neckline) between the two troughs.
+- Price breaks above the neckline on volume to confirm.
+- Volume is often higher on the second bottom's recovery, showing growing buyer conviction.
+
+What it means:
+- The stock has twice found buyers at a key level — sellers are losing control.
+- Neckline breakout triggers institutional buying as the pattern becomes confirmed.
+- Measured move target: Neckline + (Neckline − Trough).
+
+Key trading levels:
+- Entry: On close above the neckline.
+- Stop-loss: Below the second trough.
+- Target: Neckline plus the height of the pattern.
+
+---
+
+PATTERN: BULL FLAG
+Type: Continuation
+Direction: Bullish
+Description:
+The bull flag is a short-term continuation pattern that forms after a sharp, impulsive price surge (the "pole"), followed by a brief, orderly consolidation (the "flag") before the uptrend resumes.
+
+How to identify:
+- A strong rally of 6%+ over a short period (the pole).
+- A tight consolidation with slightly downward or horizontal drift (the flag) — typically 3–5 sessions.
+- Flag range should be less than 6% of the pole high.
+- Breakout above the upper flag boundary confirms continuation.
+
+What it means:
+- The initial surge attracted buyers. The consolidation is healthy profit-taking.
+- The tight, orderly pullback shows sellers are not aggressive — buyers will likely step in again.
+- The expected move after breakout equals roughly the height of the pole.
+
+Key trading levels:
+- Entry: On breakout above the flag's upper trendline.
+- Stop-loss: Below the flag's lower trendline.
+- Target: Flag breakout point + pole height.
+
+---
+
+PATTERN: BEARISH RSI DIVERGENCE
+Type: Divergence
+Direction: Bearish
+Description:
+Bearish RSI divergence occurs when price makes higher highs, but the RSI (Relative Strength Index) makes lower highs simultaneously. It is a warning signal that the uptrend is losing momentum and may reverse.
+
+How to identify:
+- Price chart: Higher high.
+- RSI chart (14-period): Lower high.
+- RSI should be in or above the overbought zone (typically above 60–70).
+
+What it means:
+- Price is being pushed up, but momentum (as measured by RSI) is weakening.
+- Fewer buyers are participating in the rally — the move is losing steam.
+- Often precedes a pullback or trend reversal, particularly if the RSI later breaks below 50.
+
+Important caveats:
+- Divergence alone is not a sell signal; wait for price confirmation (break of a trendline or key support).
+- In strong uptrends, divergence can persist for many bars before resolution.
+
+---
+
+PATTERN: BULLISH RSI DIVERGENCE
+Type: Divergence
+Direction: Bullish
+Description:
+Bullish RSI divergence occurs when price makes lower lows, but RSI makes higher lows simultaneously. It signals that selling pressure is exhausting and a reversal to the upside may be near.
+
+How to identify:
+- Price chart: Lower low.
+- RSI chart (14-period): Higher low.
+- RSI typically in or approaching oversold territory (below 40–45).
+
+What it means:
+- Price is still falling, but the rate of decline is slowing — sellers are losing conviction.
+- Smart money / institutional buyers are quietly accumulating.
+- A confirming bullish candle or breakout above a key level is the trigger to act.
+
+---
+
+HEAD AND SHOULDERS
+Type: Reversal
+Direction: Bearish
+Description:
+Head and Shoulders is one of the most reliable and widely recognised reversal patterns. It forms at market tops after a prolonged uptrend.
+
+Structure:
+- Left Shoulder: A peak, followed by a pullback.
+- Head: A higher peak (the highest point), followed by a deeper pullback to the neckline.
+- Right Shoulder: A lower peak, roughly equal to the left shoulder.
+- Neckline: A horizontal or slightly sloping line connecting the two troughs.
+
+What it means:
+- The pattern shows three pushes higher, each weaker than the last — classic buyer exhaustion.
+- The neckline break is the trigger; the price target is measured as: Neckline − (Head − Neckline).
+
+---
+
+INVERSE HEAD AND SHOULDERS
+Type: Reversal
+Direction: Bullish
+Description:
+The inverse head and shoulders forms at market bottoms after a downtrend and signals a bullish reversal.
+
+Structure:
+- Left Shoulder: A trough, followed by a recovery.
+- Head: A deeper trough (the lowest point), followed by a recovery to neckline.
+- Right Shoulder: A shallower trough, roughly equal to the left shoulder.
+- Neckline: Connects the two peaks between the shoulders.
+
+What it means:
+- Three pushes lower, each with less selling power — sellers running out of steam.
+- Neckline break confirms the reversal. Target: Neckline + (Neckline − Head).
+
+---
+
+CUP AND HANDLE
+Type: Continuation
+Direction: Bullish
+Description:
+The cup and handle is a bullish continuation pattern resembling the profile of a tea cup. It was popularised by William O'Neil.
+
+Structure:
+- Cup: A U-shaped rounding bottom (gradual decline and recovery, not V-shaped).
+- Handle: A brief, mild pullback (5–15%) just below the prior high.
+- Breakout: Price breaks above the handle resistance with volume.
+
+What it means:
+- The cup represents a period of constructive base building.
+- The handle shakes out weak holders before the next leg up.
+- Often associated with strong fundamental stocks making new highs.

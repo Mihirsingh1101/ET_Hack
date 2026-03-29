@@ -1,0 +1,240 @@
+TECHNICAL INDICATORS KNOWLEDGE BASE
+=====================================
+
+This document covers the primary technical indicators used in price and momentum analysis of stocks and indices.
+
+---
+
+INDICATOR: RSI (RELATIVE STRENGTH INDEX)
+Category: Momentum Oscillator
+Developed by: J. Welles Wilder Jr. (1978)
+Formula: RSI = 100 − [100 / (1 + RS)], where RS = Average Gain / Average Loss (default 14 periods)
+
+Description:
+RSI measures the speed and magnitude of recent price changes to evaluate overbought or oversold conditions. It oscillates between 0 and 100.
+
+Key Levels:
+- Above 70: Overbought — the stock may be due for a pullback or consolidation.
+- Below 30: Oversold — the stock may be due for a bounce or reversal.
+- 50 line: Acts as a midpoint; RSI above 50 confirms bullish momentum, below 50 confirms bearish.
+
+Interpretation:
+- Overbought does not mean sell immediately; in a strong uptrend, RSI can stay above 70 for extended periods.
+- Oversold does not mean buy immediately; in a strong downtrend, RSI can remain below 30.
+- RSI divergence with price is a powerful leading indicator (see chart patterns).
+- RSI failure swings (forming a pattern within the RSI itself at extremes) are high-confidence signals.
+
+Common Uses:
+1. Identify overbought/oversold conditions.
+2. Confirm trend direction (RSI > 50 = bullish bias).
+3. Spot divergence with price for early reversal warnings.
+4. Find support/resistance within the RSI itself.
+
+Indian Market Context:
+- In NSE stocks, RSI often stays elevated (60–80) during strong bull phases led by FII buying.
+- RSI reversals near 30 in quality large-caps often offer strong risk/reward entries.
+
+---
+
+INDICATOR: MACD (MOVING AVERAGE CONVERGENCE DIVERGENCE)
+Category: Trend-Following Momentum Indicator
+Developed by: Gerald Appel (1970s)
+Formula:
+- MACD Line = 12-period EMA − 26-period EMA
+- Signal Line = 9-period EMA of MACD Line
+- Histogram = MACD Line − Signal Line
+
+Description:
+MACD tracks the relationship between two exponential moving averages (EMAs) to identify changes in the strength, direction, momentum, and duration of a trend.
+
+Key Signals:
+1. MACD Crossover: When the MACD line crosses above the Signal line → Bullish. Crosses below → Bearish.
+2. Zero Line Crossover: MACD crossing above zero confirms an uptrend; below zero confirms downtrend.
+3. Histogram: Bars above zero = bullish momentum; bars below zero = bearish momentum. Shrinking bars signal fading momentum.
+4. Divergence: MACD diverging from price gives early warnings of trend exhaustion.
+
+Interpretation:
+- Best used as a trend confirmation tool, not a standalone signal.
+- Works well in trending markets; prone to false signals in sideways/choppy markets.
+- Combine MACD with RSI and price structure for high-probability setups.
+
+---
+
+INDICATOR: MOVING AVERAGES (SMA & EMA)
+Category: Trend-Following
+Types:
+- SMA (Simple Moving Average): Equal weight to all periods.
+- EMA (Exponential Moving Average): More weight to recent periods; reacts faster to price changes.
+
+Common Periods and their Significance:
+- 20-period MA: Short-term trend; used by swing traders. Acts as dynamic support in uptrends.
+- 50-period MA: Medium-term trend; widely watched by institutional traders. A key battleground.
+- 100-period MA: Intermediate trend. Less commonly used but significant.
+- 200-period MA: Long-term trend; the single most important moving average. Widely used by fund managers.
+
+Golden Cross:
+- When the 50-day SMA crosses ABOVE the 200-day SMA.
+- Signals a long-term shift to bullish momentum. Historically bullish for 6–12 months.
+
+Death Cross:
+- When the 50-day SMA crosses BELOW the 200-day SMA.
+- Signals a long-term shift to bearish momentum.
+
+Price Relationship to MAs:
+- Price above 200-day MA: Stock is in a long-term uptrend — buy-side bias.
+- Price below 200-day MA: Stock is in a long-term downtrend — sell-side bias.
+- Price breaking above a key MA (especially 50-day or 200-day) with volume = strong bullish signal.
+
+EMA vs SMA:
+- EMA reacts faster to recent price changes; preferred for short-term and intraday trading.
+- SMA is smoother and preferred for identifying major trends.
+
+Indian Market Context:
+- The 200-day SMA is especially important for Nifty 50 and large-cap NSE stocks.
+- FIIs often use the 200-day MA as a reference for strategic buy/sell decisions.
+
+---
+
+INDICATOR: BOLLINGER BANDS
+Category: Volatility Indicator
+Developed by: John Bollinger (1980s)
+Formula:
+- Middle Band = 20-period SMA
+- Upper Band = Middle Band + (2 × 20-period Standard Deviation)
+- Lower Band = Middle Band − (2 × 20-period Standard Deviation)
+
+Description:
+Bollinger Bands expand and contract based on market volatility. They measure how "stretched" or "compressed" price action is relative to recent history.
+
+Key Signals:
+1. Band Squeeze: When bands narrow significantly, it signals low volatility — a big breakout is imminent (direction must be confirmed by other indicators).
+2. Band Walk: During a strong trend, price can "walk" along the upper or lower band — not automatically overbought/sold.
+3. Upper Band Touch: In a sideways market = overbought; in an uptrend = continuation of strength.
+4. Lower Band Touch: In a sideways market = oversold; in a downtrend = continuation of weakness.
+5. Middle Band: Acts as a dynamic support/resistance; in an uptrend, pullbacks often find support here.
+
+Interpretation:
+- Bollinger Bands do not give buy/sell signals on their own; they measure volatility context.
+- A close outside the bands is significant — 95% of closes fall inside the bands statistically.
+- Combine with RSI: Price at upper band + RSI > 70 = strong overbought reading; Price at lower band + RSI < 30 = strong oversold reading.
+
+---
+
+INDICATOR: VOLUME
+Category: Market Breadth / Confirmation
+Description:
+Volume measures the number of shares traded in a given period. It is the single most important confirmation tool for any price move or pattern.
+
+Key Principles:
+1. Volume precedes price: Unusual volume spikes often precede significant price moves.
+2. Trend confirmation: Rising price + rising volume = healthy, sustainable uptrend.
+3. Divergence warning: Rising price + falling volume = distribution; the trend may be weakening.
+4. Breakout confirmation: A breakout from any pattern (resistance, chart pattern) MUST be accompanied by above-average volume to be valid.
+5. Panic volume: Extremely high volume at market bottoms (climax selling) often marks the end of a downtrend.
+
+Volume Metrics:
+- Average Volume: Typically calculated over 20 or 50 days.
+- Relative Volume (RVOL): Today's volume / Average volume. RVOL > 1.5 is notable; > 2.0 is significant.
+- Volume Spike: A single session with volume 3–5× the average — signals major institutional activity.
+
+Indian Market Context:
+- In NSE stocks, FII and DII activity heavily drives volume patterns.
+- Pre-open and closing auction volumes are particularly significant on Indian exchanges.
+
+---
+
+INDICATOR: VWAP (VOLUME WEIGHTED AVERAGE PRICE)
+Category: Intraday Trend / Fair Value
+Formula: VWAP = Σ(Price × Volume) / Σ(Volume), calculated intraday from market open.
+
+Description:
+VWAP represents the average price a security has traded at throughout the day, weighted by volume. It is the benchmark used by institutional traders.
+
+Key Uses:
+- Price above VWAP: Intraday bullish; institutions are paying above average — bullish bias.
+- Price below VWAP: Intraday bearish; sellers are in control.
+- VWAP as Support/Resistance: Strong stocks bounce off VWAP; weak stocks reject at VWAP.
+- Institutional Benchmark: Algorithms are programmed to buy near VWAP to minimise market impact.
+
+---
+
+INDICATOR: STOCHASTIC OSCILLATOR
+Category: Momentum Oscillator
+Formula: %K = (Close − Lowest Low) / (Highest High − Lowest Low) × 100
+          %D = 3-period SMA of %K
+Default Period: 14 periods
+
+Description:
+The Stochastic Oscillator compares a stock's closing price to its price range over a set period. Like RSI, it oscillates between 0 and 100.
+
+Key Levels:
+- Above 80: Overbought.
+- Below 20: Oversold.
+
+Key Signals:
+1. %K crossing above %D in oversold territory → Bullish signal.
+2. %K crossing below %D in overbought territory → Bearish signal.
+3. Divergence with price → Same interpretation as RSI divergence.
+
+---
+
+INDICATOR: ATR (AVERAGE TRUE RANGE)
+Category: Volatility Indicator
+Developed by: J. Welles Wilder Jr.
+Formula: ATR = Average of True Ranges over N periods (typically 14).
+True Range = Max of:
+  - Current High − Current Low
+  - |Current High − Previous Close|
+  - |Current Low − Previous Close|
+
+Description:
+ATR measures market volatility — how much a stock typically moves in a given period. It does not indicate direction.
+
+Key Uses:
+1. Stop-loss placement: A common method is placing stop-loss at 1.5× or 2× ATR from entry.
+2. Position sizing: Higher ATR = higher risk per share = smaller position size.
+3. Volatility context: Rising ATR in a downtrend = increasing fear/selling pressure.
+4. Breakout filters: A real breakout often expands ATR significantly.
+
+---
+
+INDICATOR: SUPPORT AND RESISTANCE LEVELS
+Category: Price Action / Structure
+Description:
+Support and resistance are horizontal price zones where buying (support) or selling (resistance) pressure has historically been significant.
+
+Support:
+- A price floor where demand (buying) has repeatedly halted a decline.
+- The more times a level holds, the more significant it becomes.
+- Once broken convincingly, support flips to resistance.
+
+Resistance:
+- A price ceiling where supply (selling) has repeatedly capped advances.
+- Strong resistance takes significant buying power (usually volume) to break.
+- Once broken convincingly, resistance flips to support.
+
+How to Identify:
+- Previous swing highs and lows.
+- Round numbers (psychological levels): e.g., ₹1000, ₹2500, ₹5000.
+- Moving averages (dynamic support/resistance).
+- High-volume price nodes (where a lot of trading occurred historically).
+
+Significance of Tests:
+- First test: Usually strong — the level holds.
+- Second test: Moderate — may hold with less conviction.
+- Third test and beyond: Often breaks — the supply/demand imbalance is being resolved.
+
+---
+
+INDICATOR: FIBONACCI RETRACEMENT
+Category: Support/Resistance (Derived)
+Key Levels: 23.6%, 38.2%, 50%, 61.8%, 78.6%
+Most Important: 61.8% (the "golden ratio") and 38.2%
+
+Description:
+Fibonacci retracement levels are horizontal lines drawn on a chart between a swing high and a swing low to identify potential support or resistance zones during a pullback.
+
+What it means:
+- In a healthy uptrend, pullbacks often find support at the 38.2% or 50% retracement levels.
+- A pullback beyond 61.8% often signals the trend may be reversing.
+- These levels are self-fulfilling to a degree — large institutions use them as reference points.

@@ -1,4 +1,5 @@
 import React from 'react';
+import MarketSentiment from '../components/MarketSentiment';
 
 export default function StockAnalysis() {
   return (
@@ -104,37 +105,7 @@ export default function StockAnalysis() {
 
           {/* Right Sidebar */}
           <aside className="col-span-12 lg:col-span-3 space-y-6">
-            <section className="bg-slate-900 rounded-xl p-6 text-white shadow-xl">
-              <div className="flex items-center gap-2 mb-6">
-                 <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-                <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Market Sentiment</h2>
-              </div>
-              <div className="mb-6">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-emerald-500 leading-tight">0.84</span>
-                  <span className="text-xs text-gray-400 font-medium">FinBERT Score</span>
-                </div>
-                <div className="w-full bg-gray-700 h-1.5 rounded-full mt-4 overflow-hidden">
-                  <div className="bg-emerald-500 h-full w-[84%] rounded-full"></div>
-                </div>
-              </div>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
-                  <p className="text-sm text-gray-300 leading-relaxed">Jio Financial demerger unlocking massive value matrix.</p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
-                  <p className="text-sm text-gray-300 leading-relaxed">Strong retail footfall reported in Q3 earnings preview.</p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-rose-400 mt-1.5 flex-shrink-0"></span>
-                  <p className="text-sm text-gray-300 leading-relaxed">O2C margin pressure due to global crude volatility.</p>
-                </li>
-              </ul>
-            </section>
+            <MarketSentiment companyName="Reliance Industries" />
 
             <section className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
               <div className="flex items-center gap-2 mb-6">

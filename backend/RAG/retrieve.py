@@ -8,7 +8,13 @@ from sentence_transformers import SentenceTransformer
 print("Waking up the Retriever...")
 # Connect to the local database we just built
 chroma_client = chromadb.PersistentClient(path="./data")
-collection = chroma_client.get_collection(name="sentinel_news")
+
+# Safe: if collection is missing, create it automatically
+try:
+    collection = chroma_client.get_collection(name="sentinel_news")
+except Exception as e:
+    print(f"Collection not found, creating new one...")
+    collection = chroma_client.create_collection(name="sentinel_news")
 
 # Load the exact same model to ensure the math matches
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")

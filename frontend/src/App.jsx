@@ -6,6 +6,7 @@ import StockAnalysis from './pages/StockAnalysis';
 import CapitalSelection from './pages/CapitalSelection';
 import RiskAssessment from './pages/RiskAssessment';
 import ObjectiveSelection from './pages/ObjectiveSelection';
+import ChatBot from './components/ChatBot';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/risk" element={<RiskAssessment />} />
         <Route path="/capital" element={<CapitalSelection />} />
       </Routes>
+      {/* Floating ChatBot Widget - Appears on all pages */}
+      <ChatBot />
     </Router>
   );
 }
