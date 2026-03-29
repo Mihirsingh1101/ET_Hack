@@ -6,6 +6,7 @@ import StockAnalysis from './pages/StockAnalysis';
 import CapitalSelection from './pages/CapitalSelection';
 import RiskAssessment from './pages/RiskAssessment';
 import ObjectiveSelection from './pages/ObjectiveSelection';
+import MyPortfolio from './pages/MyPortfolio';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/objective" element={<ObjectiveSelection />} />
         <Route path="/risk" element={<RiskAssessment />} />
         <Route path="/capital" element={<CapitalSelection />} />
+        <Route path="/portfolio" element={<MyPortfolio />} />
       </Routes>
     </Router>
   );

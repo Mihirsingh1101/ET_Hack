@@ -1,126 +1,187 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PortfolioModal from '../components/PortfolioModal';
 
-const TopProfileMatches = () => (
-  <section>
-    <div className="flex items-center justify-between mb-4">
-      <h2 className="text-xl font-bold">Top Profile Matches</h2>
-      <span className="text-xs font-semibold px-3 py-1 bg-[#e0e7ff] text-[#4338ca] rounded-full">Aggressive Strategy</span>
-    </div>
-    
-    <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
-      {/* Card 1 */}
-      <div className="min-w-[280px] bg-white rounded-2xl p-5 border-2 border-blue-500 shadow-sm relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-16 h-8 bg-blue-500 rounded-bl-3xl"></div>
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="font-bold text-lg">RELIANCE</h3>
-            <p className="text-gray-500 text-sm">₹2984.50</p>
-          </div>
-          <div className="w-12 h-12 rounded-full border-4 border-[#dcfce7] flex items-center justify-center">
-            <span className="text-[#059669] text-xs font-bold">92%</span>
-          </div>
-        </div>
-        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          Strong Confluence
-        </div>
+const addToPortfolioApi = async (symbol, amount) => {
+  if (!symbol) return;
+  try {
+    const res = await fetch(`http://localhost:8001/api/portfolio`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ symbol, amount })
+    });
+    return res.ok;
+  } catch (e) {
+    console.error("Portfolio error:", e);
+    return false;
+  }
+};
+
+const TopProfileMatches = ({ onAdd }) => {
+  const navigate = useNavigate();
+  return (
+    <section>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold text-slate-800">Top Profile Matches</h2>
+        <span className="text-xs font-semibold px-3 py-1 bg-[#e0e7ff] text-[#4338ca] rounded-full">Aggressive Strategy</span>
       </div>
       
-      {/* Card 2 */}
-      <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="font-bold text-lg">TCS</h3>
-            <p className="text-gray-500 text-sm">₹4120.15</p>
+      <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
+        {/* Card 1 */}
+        <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm relative overflow-hidden transition-all hover:shadow-md group">
+          <div onClick={() => navigate('/analysis?symbol=RELIANCE')} className="cursor-pointer">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="font-bold text-lg text-slate-800">RELIANCE</h3>
+                <p className="text-gray-500 text-sm">₹2984.50</p>
+              </div>
+              <div className="w-12 h-12 rounded-full border-4 border-[#dcfce7] flex items-center justify-center">
+                <span className="text-[#059669] text-xs font-bold">92%</span>
+              </div>
+            </div>
+            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+              Strong Confluence
+            </div>
           </div>
-          <div className="w-12 h-12 rounded-full border-4 border-[#dcfce7] flex items-center justify-center">
-            <span className="text-[#059669] text-xs font-bold">88%</span>
+          <button 
+            onClick={(e) => { e.stopPropagation(); onAdd("RELIANCE"); }}
+            className="absolute top-2 right-2 p-1.5 bg-slate-100 text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white"
+            title="Add to Portfolio"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+          </button>
+        </div>
+        
+        {/* Card 2 */}
+        <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm transition-all hover:shadow-md group relative">
+          <div onClick={() => navigate('/analysis?symbol=TCS')} className="cursor-pointer">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="font-bold text-lg text-slate-800">TCS</h3>
+                <p className="text-gray-500 text-sm">₹4120.15</p>
+              </div>
+              <div className="w-12 h-12 rounded-full border-4 border-[#dcfce7] flex items-center justify-center">
+                <span className="text-[#059669] text-xs font-bold">88%</span>
+              </div>
+            </div>
+            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+              Strong Confluence
+            </div>
           </div>
+          <button 
+            onClick={(e) => { e.stopPropagation(); onAdd("TCS"); }}
+            className="absolute top-2 right-2 p-1.5 bg-slate-100 text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white"
+            title="Add to Portfolio"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+          </button>
         </div>
-        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          Strong Confluence
+        
+        {/* Card 3 */}
+        <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-100 shadow-sm transition-all hover:shadow-md group relative">
+          <div onClick={() => navigate('/analysis?symbol=HDFCBANK')} className="cursor-pointer">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="font-bold text-lg text-slate-800">HDFCBANK</h3>
+                <p className="text-gray-500 text-sm">₹1450.00</p>
+              </div>
+              <div className="w-12 h-12 rounded-full border-4 border-gray-100 flex items-center justify-center">
+                <span className="text-gray-400 text-xs font-bold">--</span>
+              </div>
+            </div>
+            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+              Strong Confluence
+            </div>
+          </div>
+          <button 
+            onClick={(e) => { e.stopPropagation(); onAdd("HDFCBANK"); }}
+            className="absolute top-2 right-2 p-1.5 bg-slate-100 text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white"
+            title="Add to Portfolio"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+          </button>
         </div>
+      </div>
+    </section>
+  );
+};
+
+const TrackedSentiment = ({ onAdd }) => {
+  const navigate = useNavigate();
+  return (
+    <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+      <div className="flex items-center justify-between mb-10">
+        <h2 className="text-xl font-bold">My Tracked Sentiment</h2>
+        <button className="flex items-center gap-1 px-4 py-2 bg-[#f1f5f9] text-[#2563eb] font-semibold text-sm rounded-xl hover:bg-[#e2e8f0] transition-colors">
+          Expand All
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+        </button>
       </div>
       
-      {/* Card 3 */}
-      <div className="min-w-[280px] bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="font-bold text-lg">HDFCBANK</h3>
-            <p className="text-gray-500 text-sm">₹1450.00</p>
+      <div className="relative mb-10">
+        <div className="absolute -top-3 left-6 px-2 bg-white text-[10px] tracking-widest text-gray-400 font-bold uppercase">Sector Averages</div>
+        <div className="border-t border-gray-100 pt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Sector Cards */}
+          <div className="bg-[#059669] text-white p-5 rounded-2xl flex flex-col justify-between h-32 hover:-translate-y-1 transition-transform cursor-default">
+            <div className="flex justify-between items-start">
+              <span className="font-bold text-lg">Energy</span>
+              <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded">1 Assets</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] opacity-80 uppercase font-bold">Score</span>
+              <span className="text-2xl font-bold">+0.85</span>
+            </div>
           </div>
-          <div className="w-12 h-12 rounded-full border-4 border-gray-100 flex items-center justify-center">
-            <span className="text-gray-400 text-xs font-bold">--</span>
+          <div className="bg-[#10b981] text-white p-5 rounded-2xl flex flex-col justify-between h-32 hover:-translate-y-1 transition-transform cursor-default">
+            <div className="flex justify-between items-start">
+              <span className="font-bold text-lg">Consumer</span>
+              <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded">1 Assets</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] opacity-80 uppercase font-bold">Score</span>
+              <span className="text-2xl font-bold">+0.70</span>
+            </div>
           </div>
-        </div>
-        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#ecfdf5] text-[#059669] text-xs font-semibold rounded">
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          Strong Confluence
+          <div className="bg-[#6ee7b7] text-[#064e3b] p-5 rounded-2xl flex flex-col justify-between h-32 hover:-translate-y-1 transition-transform cursor-default">
+            <div className="flex justify-between items-start">
+              <span className="font-bold text-lg">Technology</span>
+              <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded">2 Assets</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] opacity-70 uppercase font-bold">Score</span>
+              <span className="text-2xl font-bold">+0.33</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
 
-const TrackedSentiment = () => (
-  <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-    <div className="flex items-center justify-between mb-10">
-      <h2 className="text-xl font-bold">My Tracked Sentiment</h2>
-      <button className="flex items-center gap-1 px-4 py-2 bg-[#f1f5f9] text-[#2563eb] font-semibold text-sm rounded-xl">
-        Expand All
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-      </button>
-    </div>
-    
-    <div className="relative mb-10">
-      <div className="absolute -top-3 left-6 px-2 bg-white text-[10px] tracking-widest text-gray-400 font-bold uppercase">Sector Averages</div>
-      <div className="border-t border-gray-100 pt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Sector Cards */}
-        <div className="bg-[#059669] text-white p-5 rounded-2xl flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="font-bold text-lg">Energy</span>
-            <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded">1 Assets</span>
+      <div className="relative">
+        <div className="absolute -top-3 left-6 px-2 bg-white text-[10px] tracking-widest text-gray-400 font-bold uppercase">Individual Stocks</div>
+        <div className="border-t border-gray-100 pt-8 flex flex-wrap gap-3">
+          <div className="group relative">
+            <button onClick={() => navigate('/analysis?symbol=RELIANCE')} className="px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white rounded-lg text-sm font-bold transition-colors shadow-sm">RELIANCE &nbsp;&bull;&nbsp; +0.85</button>
+            <button onClick={() => onAdd("RELIANCE")} className="absolute -top-2 -right-2 w-5 h-5 bg-white border border-gray-200 text-slate-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white shadow-sm">+</button>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-[10px] opacity-80 uppercase font-bold">Score</span>
-            <span className="text-2xl font-bold">+0.85</span>
+          <div className="group relative">
+            <button onClick={() => navigate('/analysis?symbol=ITC')} className="px-4 py-2 bg-[#10b981] hover:bg-[#059669] text-white rounded-lg text-sm font-bold transition-colors shadow-sm">ITC &nbsp;&bull;&nbsp; +0.70</button>
+            <button onClick={() => onAdd("ITC")} className="absolute -top-2 -right-2 w-5 h-5 bg-white border border-gray-200 text-slate-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white shadow-sm">+</button>
           </div>
-        </div>
-        <div className="bg-[#10b981] text-white p-5 rounded-2xl flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="font-bold text-lg">Consumer</span>
-            <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded">1 Assets</span>
+          <div className="group relative">
+            <button onClick={() => navigate('/analysis?symbol=TCS')} className="px-4 py-2 bg-[#6ee7b7] hover:bg-[#34d399] text-[#064e3b] rounded-lg text-sm font-bold transition-colors shadow-sm">TCS &nbsp;&bull;&nbsp; +0.45</button>
+            <button onClick={() => onAdd("TCS")} className="absolute -top-2 -right-2 w-5 h-5 bg-white border border-gray-200 text-slate-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white shadow-sm">+</button>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-[10px] opacity-80 uppercase font-bold">Score</span>
-            <span className="text-2xl font-bold">+0.70</span>
-          </div>
-        </div>
-        <div className="bg-[#6ee7b7] text-[#064e3b] p-5 rounded-2xl flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="font-bold text-lg">Technology</span>
-            <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded">2 Assets</span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-[10px] opacity-70 uppercase font-bold">Score</span>
-            <span className="text-2xl font-bold">+0.33</span>
+          <div className="group relative">
+            <button onClick={() => navigate('/analysis?symbol=INFY')} className="px-4 py-2 bg-[#6ee7b7] hover:bg-[#34d399] text-[#064e3b] rounded-lg text-sm font-bold transition-colors shadow-sm">INFY &nbsp;&bull;&nbsp; +0.20</button>
+            <button onClick={() => onAdd("INFY")} className="absolute -top-2 -right-2 w-5 h-5 bg-white border border-gray-200 text-slate-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white shadow-sm">+</button>
           </div>
         </div>
       </div>
-    </div>
-
-    <div className="relative">
-      <div className="absolute -top-3 left-6 px-2 bg-white text-[10px] tracking-widest text-gray-400 font-bold uppercase">Individual Stocks</div>
-      <div className="border-t border-gray-100 pt-8 flex flex-wrap gap-3">
-        <span className="px-4 py-2 bg-[#059669] text-white rounded-lg text-sm font-bold">RELIANCE &nbsp;&bull;&nbsp; +0.85</span>
-        <span className="px-4 py-2 bg-[#10b981] text-white rounded-lg text-sm font-bold">ITC &nbsp;&bull;&nbsp; +0.70</span>
-        <span className="px-4 py-2 bg-[#6ee7b7] text-[#064e3b] rounded-lg text-sm font-bold">TCS &nbsp;&bull;&nbsp; +0.45</span>
-        <span className="px-4 py-2 bg-[#6ee7b7] text-[#064e3b] rounded-lg text-sm font-bold">INFY &nbsp;&bull;&nbsp; +0.20</span>
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const MarketHighlights = () => (
   <section className="bg-[#0f172a] text-white rounded-[2.5rem] p-8 shadow-xl">
@@ -170,52 +231,120 @@ const MarketHighlights = () => (
   </section>
 );
 
-const TechnicalFlags = () => (
-  <section className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-    <div className="flex items-center gap-2 mb-8">
-      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-      <span className="text-[10px] tracking-widest uppercase font-bold text-gray-400">Technical Flags</span>
-    </div>
-    <div className="space-y-4">
-      <div className="bg-[#fef2f2] rounded-2xl p-4 flex items-center justify-between border border-[#fee2e2]">
-        <div className="flex items-center gap-4">
-          <div className="bg-white px-2 py-1 rounded text-[10px] font-bold text-[#b91c1c] border border-[#fee2e2]">NIFTY</div>
-          <div>
-            <h4 className="font-bold text-sm">RSI at 74</h4>
-            <p className="text-[10px] text-[#b91c1c] font-semibold">Overbought Zone</p>
-          </div>
-        </div>
-        <div className="text-center">
-          <svg className="w-8 h-8 text-[#ef4444] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          <span className="text-[8px] font-bold text-[#b91c1c] uppercase">Alert</span>
-        </div>
+const TechnicalFlags = ({ onAdd }) => {
+  const [flags, setFlags] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('http://localhost:8001/api/flags')
+      .then(res => res.json())
+      .then(data => {
+        setFlags(data.flags || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching flags:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <section className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm flex flex-col h-full">
+      <div className="flex items-center gap-2 mb-8">
+        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+        <span className="text-[10px] tracking-widest uppercase font-bold text-gray-400">Technical Flags</span>
       </div>
       
-      <div className="bg-[#f0fdf4] rounded-2xl p-4 flex items-center justify-between border border-[#dcfce7]">
-        <div className="flex items-center gap-4">
-          <div className="bg-white px-2 py-1 rounded text-[10px] font-bold text-[#15803d] border border-[#dcfce7]">BANK<br/>NIFTY</div>
-          <div>
-            <h4 className="font-bold text-sm">MACD Cross</h4>
-            <p className="text-[10px] text-[#15803d] font-semibold">Bullish Momentum</p>
+      <div className="space-y-4 overflow-y-auto pr-1 flex-grow">
+        {loading ? (
+          <div className="flex flex-col items-center py-10 gap-3">
+            <div className="w-6 h-6 border-2 border-slate-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <p className="text-xs font-semibold text-slate-400 animate-pulse">Scanning Market...</p>
           </div>
-        </div>
-        <div className="text-center">
-          <div className="w-8 h-8 flex items-center justify-center">
-             <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-          </div>
-          <span className="text-[8px] font-bold text-[#15803d] uppercase">Signal</span>
-        </div>
+        ) : flags.length === 0 ? (
+          <p className="text-sm text-center text-gray-400 py-10 italic">No significant patterns detected.</p>
+        ) : (
+          flags.map((flag, index) => (
+            <div 
+              key={index}
+              className={`group p-4 rounded-2xl flex items-center justify-between border transition-all duration-200 hover:shadow-md ${
+                flag.direction === 'bullish' 
+                  ? 'bg-emerald-50 border-emerald-100 hover:border-emerald-300' 
+                  : 'bg-rose-50 border-rose-100 hover:border-rose-300'
+              }`}
+            >
+              <div 
+                onClick={() => navigate(`/analysis?symbol=${flag.symbol}`)}
+                className="flex items-center gap-4 cursor-pointer flex-grow"
+              >
+                <div className={`bg-white px-2.5 py-1 rounded shadow-sm text-[10px] font-black border ${
+                  flag.direction === 'bullish' ? 'text-emerald-700 border-emerald-100' : 'text-rose-700 border-rose-100'
+                }`}>
+                  {flag.symbol}
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-slate-800">{flag.name}</h4>
+                  <p className={`text-[10px] font-bold uppercase ${
+                    flag.direction === 'bullish' ? 'text-emerald-600' : 'text-rose-600'
+                  }`}>
+                    {flag.type} {flag.direction === 'bullish' ? '↑' : '↓'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => onAdd(flag.symbol)}
+                  className="p-2 bg-white border border-slate-200 text-slate-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-emerald-500 hover:text-white hover:border-emerald-500 shadow-sm"
+                  title="Add to Portfolio"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+                </button>
+                <div className="text-center opacity-60 group-hover:opacity-100 transition-opacity">
+                  {flag.direction === 'bullish' ? (
+                    <svg className="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 10l7-7m0 0l7 7m-7-7v18" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+                  ) : (
+                    <svg className="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default function MarketDashboard() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeSymbol, setActiveSymbol] = useState('');
+  const navigate = useNavigate();
+
+  const handleOpenModal = (symbol) => {
+    setActiveSymbol(symbol);
+    setModalOpen(true);
+  };
+
+  const handleConfirmAdd = async (amount) => {
+    const success = await addToPortfolioApi(activeSymbol, amount);
+    if (success) {
+      setModalOpen(false);
+      alert(`Successfully added ₹${amount.toLocaleString()} in ${activeSymbol} to your portfolio!`);
+    }
+  };
+
   return (
     <div className="bg-[#f8fafc] text-[#1e293b] min-h-screen">
+      <PortfolioModal 
+        isOpen={modalOpen} 
+        onClose={() => setModalOpen(false)} 
+        symbol={activeSymbol} 
+        onConfirm={handleConfirmAdd} 
+      />
       <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <div className="flex items-center text-[#1e40af] font-bold text-xl tracking-tight">
+          <div className="flex items-center text-[#1e40af] font-bold text-xl tracking-tight cursor-default">
              <svg className="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
             </svg>
@@ -233,22 +362,26 @@ export default function MarketDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 cursor-pointer">
-            <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-            </svg>
+          <button 
+            onClick={() => navigate('/portfolio')}
+            className="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-[#1e40af] text-sm font-black rounded-2xl border border-slate-200 transition-all shadow-sm active:scale-95"
+          >
+            My Portfolio
+          </button>
+          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 cursor-pointer overflow-hidden">
+            <img src="https://ui-avatars.com/api/?name=User&background=1e40af&color=fff" alt="User" />
           </div>
         </div>
       </header>
       
       <main className="max-w-[1400px] mx-auto p-6 grid grid-cols-12 gap-6">
         <div className="col-span-12 lg:col-span-8 space-y-8">
-          <TopProfileMatches />
-          <TrackedSentiment />
+          <TopProfileMatches onAdd={handleOpenModal} />
+          <TrackedSentiment onAdd={handleOpenModal} />
         </div>
         <aside className="col-span-12 lg:col-span-4 space-y-6">
           <MarketHighlights />
-          <TechnicalFlags />
+          <TechnicalFlags onAdd={handleOpenModal} />
         </aside>
       </main>
       
